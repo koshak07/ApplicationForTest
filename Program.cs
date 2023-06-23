@@ -21,6 +21,7 @@ namespace ApplicationForTest
 
             builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
                 .AddEntityFrameworkStores<ApplicationDbContext>();
+            
             builder.Services.AddControllersWithViews();
 
             var app = builder.Build();
