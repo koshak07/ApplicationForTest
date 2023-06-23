@@ -12,5 +12,9 @@ namespace ApplicationForTest.Data
         public UserDBContext(DbContextOptions<UserDBContext> options) : base(options)
         {
         }
+        protected override void OnModelCreating(ModelBuilder builder)
+        {
+            base.OnModelCreating(builder);
+        }
     }
 }

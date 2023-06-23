@@ -1,6 +1,8 @@
 using ApplicationForTest.Data;
+using ApplicationForTest.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace ApplicationForTest
 {
@@ -19,9 +21,9 @@ namespace ApplicationForTest
     options.UseSqlServer(userconnectionString));
             builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
-            builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
+            builder.Services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = true)
                 .AddEntityFrameworkStores<ApplicationDbContext>();
-            
+
             builder.Services.AddControllersWithViews();
 
             var app = builder.Build();
