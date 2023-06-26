@@ -1,7 +1,9 @@
 using ApplicationForTest.Data;
 using ApplicationForTest.Models;
+using ApplicationForTest.Servises;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using ApplicationForTest.Interfaces;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace ApplicationForTest
@@ -11,15 +13,20 @@ namespace ApplicationForTest
         public static void Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
+
             var userconnectionString = builder.Configuration.GetConnectionString("UserConnection");
 
-            // Add services to the container.
             var connectionString = builder.Configuration.GetConnectionString("DefaultConnection") ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
+            
             builder.Services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(connectionString));
             builder.Services.AddDbContext<UserDBContext>(options =>
-    options.UseSqlServer(userconnectionString));
+                options.UseSqlServer(userconnectionString));
             builder.Services.AddDatabaseDeveloperPageExceptionFilter();
+            // Add services to the container.
+            builder.Services.AddTransient<IAppService, AppService>();
+            builder.Services.AddTransient<IApplicationDbContext, ApplicationDbContext>();
+
 
             builder.Services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = true)
                 .AddEntityFrameworkStores<ApplicationDbContext>();

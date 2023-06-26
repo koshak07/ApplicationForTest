@@ -1,6 +1,6 @@
 ﻿using ApplicationForTest.Models;
 
-namespace ApplicationForTest.interfaces
+namespace ApplicationForTest.Interfaces
 {
     public interface IAppService
     {
