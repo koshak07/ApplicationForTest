@@ -9,9 +9,9 @@ namespace ApplicationForTest.Data
 {
     public interface IApplicationDbContext
     {
-        DbSet<Course> Course { get; set; }
-        DbSet<Test> Test { get; set; }
-        DbSet<Question> Question { get; set; }
-        DbSet<Answer> Answer { get; set; }
+        DbSet<Course> Courses { get; set; }
+        DbSet<Test> Tests { get; set; }
+        DbSet<Question> Questions { get; set; }
+        DbSet<Answer> Answers { get; set; }
     }
 }

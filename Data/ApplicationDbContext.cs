@@ -11,9 +11,9 @@ namespace ApplicationForTest.Data
         {
         }
 
-        public DbSet<Course> Course { get; set; } = default!;
-        public DbSet<Test> Test { get; set; } = default!;
-        public DbSet<Question> Question { get; set; } = default!;
-        public DbSet<Answer> Answer { get; set; } = default!;
+        public DbSet<Course> Courses { get; set; } = default!;
+        public DbSet<Test> Tests { get; set; } = default!;
+        public DbSet<Question> Questions { get; set; } = default!;
+        public DbSet<Answer> Answers { get; set; } = default!;
     }
 }
