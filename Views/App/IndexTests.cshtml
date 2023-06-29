@@ -24,6 +24,7 @@
                     @Html.DisplayNameFor(model => model.Name)
 
                 </th>
+                
 
                 <th>
                     @Html.DisplayNameFor(model => model.Description)
@@ -42,7 +43,10 @@
             {
                 <tr>
                     <td>
+                        <a asp-action="IndexQuestions" 
+                        asp-route-id="@item.Id">
                         @Html.DisplayFor(modelItem => item.Name)
+                        </a>
                     </td>
 
                     <td>

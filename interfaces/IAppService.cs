@@ -34,7 +34,7 @@ namespace ApplicationForTest.Interfaces
 
         Task RemoveQuestion(Guid? id);
 
-        Task<List<Answer>> GetAnswers(Guid questionId);
+        Task<List<Answer>> GetAnswers(Guid? questionId);
 
         Task<Answer> GetAnswer(Guid? id);
 

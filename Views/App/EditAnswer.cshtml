@@ -1,29 +1,29 @@
-﻿@model ApplicationForTest.Models.Test
+﻿@model ApplicationForTest.Models.Answer
 
 
 @{
-    ViewData["Title"] = "EditTest";
+    ViewData["Title"] = "EditAnswer";
 }
 
 <h1>Edit</h1>
 
-<h4>Test</h4>
+<h4>Answer</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
-        <form asp-action="EditTest" asp-route-id="@Model.CourseId">
+        <form asp-action="EditAnswer" asp-route-id="@Model.QuestionId">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="Id" />
-            <input type="hidden" asp-for="CourseId" />
+            <input type="hidden" asp-for="QuestionId" />
             <div class="form-group">
                 <label asp-for="Name" class="control-label"></label>
                 <input asp-for="Name" class="form-control" />
                 <span asp-validation-for="Name" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Description" class="control-label"></label>
-                <input asp-for="Description" class="form-control" />
-                <span asp-validation-for="Description" class="text-danger"></span>
+                <label asp-for="isRight" class="control-label"></label>
+                <input asp-for="isRight" class="form-control" />
+                <span asp-validation-for="isRight" class="text-danger"></span>
             </div>
 
 
@@ -31,7 +31,7 @@
                 <input type="submit"
                        value="Save"
                        class="btn btn-primary"
-                <a asp-action="IndexTests" asp-route-id="@Model.CourseId"></a>
+                <a asp-action="IndexTests" asp-route-id="@Model.QuestionId"></a>
 
                 
 
@@ -41,7 +41,7 @@
 </div>
 
 <div>
-    <a asp-action="IndexTests" asp-route-id="@Model.CourseId">Back to List</a>
+    <a asp-action="IndexTests" asp-route-id="@Model.QuestionId">Back to List</a>
 </div>
 
 @section Scripts {

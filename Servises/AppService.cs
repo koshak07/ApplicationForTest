@@ -60,7 +60,8 @@ namespace ApplicationForTest.Servises
 
         public async Task<List<Test>> GetTests(int? courseId)
         {
-            return await _context.Test.Where(p => p.CourseId == courseId).ToListAsync();
+            return await _context.Test.Where(p => p.CourseId == courseId)
+                .Include(c => c.Questions).ToListAsync();
         }
 
         public async Task<Test> GetTest(Guid? id)
@@ -92,7 +93,7 @@ namespace ApplicationForTest.Servises
             return question;
         }
 
-        public async Task<List<Answer>> GetAnswers(Guid questionId)
+        public async Task<List<Answer>> GetAnswers(Guid? questionId)
         {
             return await _context.Answer.Where(p => p.QuestionId == questionId).ToListAsync();
         }

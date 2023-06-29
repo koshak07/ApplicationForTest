@@ -1,0 +1,94 @@
+﻿@model ApplicationForTest.Models.Question
+
+
+
+@{
+
+    ViewData["Title"] = "Details";
+    var answ = ViewBag.Answ;
+
+    
+}
+
+
+<h1>Details</h1>
+
+<div>
+    <h4>Question</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Name)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Name)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Description)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Description)
+        </dd>
+        
+    </dl>
+   
+       @* <p>
+            <a asp-action="CreateAnswer" asp-route-id="@Model.Id">Create New Answer</a>
+        </p>*@
+        @if (answ != null)
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                        <p>Variant</p>
+
+                </th>
+
+                <th>
+                        <p>isRight</p>
+                </th>
+
+                
+            </tr>
+        </thead>
+        <tbody>
+
+
+
+            @foreach (var item in answ)
+            {
+                <tr>
+                    <td>
+                            <p>@item.Name</p>
+                    </td>
+
+                    <td>
+                            <p>@item.isRight</p>
+                        </td>
+                    
+
+                    <td>
+                        <a asp-action="EditAnswer" asp-route-id="@item.Id">Edit</a> |
+
+                        <a asp-action="DeleteAnswer" asp-route-id="@item.Id">Delete</a>
+                    </td>
+                </tr>
+            }
+            
+
+        </tbody>
+    </table>
+    
+}
+else
+{
+    <h3>Нет данных для отображения</h3>
+}
+    
+</div>
+<div>
+    <a asp-action="EditTest" asp-route-id="@Model.Id">Edit</a> |
+    <a asp-action="IndexQuestions" asp-route-id="@Model.TestId">Back to List</a>
+</div>
+

@@ -1,0 +1,69 @@
+﻿@model IEnumerable<ApplicationForTest.Models.Answer>
+
+@{
+    ViewData["Title"] = "Answer List";
+    var questionId = ViewData["id"];
+    var count = ViewData["count"];
+
+}
+
+<h1>Answers List</h1>
+
+<p>
+    <a asp-action="CreateAnswer" asp-route-id="@questionId">Create New Answer </a>
+</p>
+
+
+
+@if (Model.Count() > 0)
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.Name)
+
+                </th>
+
+                <th>
+                    @Html.DisplayNameFor(model => model.isRight)
+                </th>
+
+                
+            </tr>
+        </thead>
+        <tbody>
+
+
+
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Name, item.Name)
+                    </td>
+
+                    <td>
+                        @Html.RadioButtonFor(modelItem => item.isRight, item.isRight)
+                    </td>
+                    
+
+                    <td>
+                        <a asp-action="EditAnswer" asp-route-id="@item.Id">Edit</a> |
+
+                        <a asp-action="DeleteAnswer" asp-route-id="@item.Id">Delete</a>
+                    </td>
+                </tr>
+            }
+            <a asp-action="IndexQuestions" asp-route-id="@questionId">Back To Test</a>
+
+        </tbody>
+    </table>
+    <p>
+        <a asp-action="CreateAnswer" asp-route-id="@questionId">Create New Answer </a>
+    </p>
+}
+else
+{
+    <h3>Нет данных для отображения</h3>
+}

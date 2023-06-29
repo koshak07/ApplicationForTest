@@ -61,10 +61,10 @@ namespace ApplicationForTest.Controllers
         }
 
         // GET: Questions List
-        public async Task<IActionResult> IndexQuestions(Guid testId)
+        public async Task<IActionResult> IndexQuestions(Guid id)
         {
-            var result = await appService.GetQuestions(testId);
-            ViewData["id"] = testId;
+            var result = await appService.GetQuestions(id);
+            ViewData["id"] = id;
             ViewData["count"] = result.Count;
 
             return View(result);
@@ -74,6 +74,8 @@ namespace ApplicationForTest.Controllers
         public async Task<IActionResult> DetailsQuestion(Guid? id)
         {
             var result = await appService.GetQuestion(id);
+            var answList = await appService.GetAnswers(id);
+            ViewBag.Answ = new List<Answer>(answList);
 
             if (result == null)
             {
@@ -85,10 +87,10 @@ namespace ApplicationForTest.Controllers
 
         // GET: Answers List
 
-        public async Task<IActionResult> IndexAnswers(Guid questionId)
+        public async Task<IActionResult> IndexAnswers(Guid id)
         {
-            var result = await appService.GetAnswers(questionId);
-            ViewData["id"] = questionId;
+            var result = await appService.GetAnswers(id);
+            ViewData["id"] = id;
             ViewData["count"] = result.Count;
 
             return View(result);
@@ -138,7 +140,7 @@ namespace ApplicationForTest.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> CreateTest(
-                                               [Bind("Id,Name,Description,Questions,CourseId")] Test test)
+                                            [Bind("Id,Name,Description,Questions,CourseId")] Test test)
         {
             if (ModelState.IsValid)
             {
@@ -163,7 +165,7 @@ namespace ApplicationForTest.Controllers
             if (ModelState.IsValid)
             {
                 await appService.CreateQuestion(question);
-                return RedirectToAction(nameof(IndexTests), new { id = question.TestId });
+                return RedirectToAction(nameof(IndexQuestions), new { id = question.TestId });
             }
             return View(question);
         }

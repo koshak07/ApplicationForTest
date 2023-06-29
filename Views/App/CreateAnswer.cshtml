@@ -1,0 +1,51 @@
+﻿@model ApplicationForTest.Models.Answer
+
+
+@{
+    ViewData["Title"] = "CreateAnswer";
+    
+}
+
+<h1>Create</h1>
+
+<h4>Answer</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="CreateAnswer" method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input hidden asp-for="QuestionId" value="@Model.QuestionId" />
+            <input hidden asp-for="Id" value="@Model.Id" />
+            <div class="form-group">
+                <label asp-for="Name" class="control-label"></label>
+                <input asp-for="Name" class="form-control" />
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="isRight" class="control-label"></label>
+                <input data-val="true"
+                       id="isRight"
+                       name="isRight"
+                       type="checkbox"
+                       value="false" />
+
+                <input asp-for="isRight" class="form-control"  name="isRight" type="hidden" value="false" />
+                @*<input asp-for="isRight" class="form-control" />*@
+                <span asp-validation-for="isRight" class="text-danger"></span>
+            </div>
+            
+            
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" /> 
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="IndexQuestion" asp-route-id="@Model.QuestionId">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
