@@ -23,11 +23,12 @@
             </div>
             <div class="form-group">
                 <label asp-for="isRight" class="control-label"></label>
-                <input data-val="true"
-                       id="isRight"
-                       name="isRight"
-                       type="checkbox"
-                       value="false" />
+                <div class="col-md-10">
+                    True
+                    @Html.RadioButtonFor(model => model.isRight, "True")
+                    False
+                    @Html.RadioButtonFor(model => model.isRight, "False")
+                </div>
 
                 <input asp-for="isRight" class="form-control"  name="isRight" type="hidden" value="false" />
                 @*<input asp-for="isRight" class="form-control" />*@

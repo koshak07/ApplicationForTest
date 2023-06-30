@@ -3,9 +3,9 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
-namespace ApplicationForTest.Data.Migrations.App
+namespace ApplicationForTest.Migrations
 {
-    public partial class initial : Migration
+    public partial class initialRole : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -28,6 +28,8 @@ namespace ApplicationForTest.Data.Migrations.App
                 columns: table => new
                 {
                     Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    CourseId = table.Column<int>(type: "int", nullable: false),
+                    RoleId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     UserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     NormalizedUserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     Email = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
@@ -49,7 +51,7 @@ namespace ApplicationForTest.Data.Migrations.App
                 });
 
             migrationBuilder.CreateTable(
-                name: "Course",
+                name: "Courses",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
@@ -59,7 +61,7 @@ namespace ApplicationForTest.Data.Migrations.App
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Course", x => x.Id);
+                    table.PrimaryKey("PK_Courses", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -169,7 +171,7 @@ namespace ApplicationForTest.Data.Migrations.App
                 });
 
             migrationBuilder.CreateTable(
-                name: "Test",
+                name: "Tests",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
@@ -180,16 +182,16 @@ namespace ApplicationForTest.Data.Migrations.App
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Test", x => x.Id);
+                    table.PrimaryKey("PK_Tests", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Test_Course_CourseId",
+                        name: "FK_Tests_Courses_CourseId",
                         column: x => x.CourseId,
-                        principalTable: "Course",
+                        principalTable: "Courses",
                         principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
-                name: "Question",
+                name: "Questions",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
@@ -200,16 +202,16 @@ namespace ApplicationForTest.Data.Migrations.App
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Question", x => x.Id);
+                    table.PrimaryKey("PK_Questions", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Question_Test_TestId",
+                        name: "FK_Questions_Tests_TestId",
                         column: x => x.TestId,
-                        principalTable: "Test",
+                        principalTable: "Tests",
                         principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
-                name: "Answer",
+                name: "Answers",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
@@ -220,17 +222,32 @@ namespace ApplicationForTest.Data.Migrations.App
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Answer", x => x.Id);
+                    table.PrimaryKey("PK_Answers", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Answer_Question_QuestionId",
+                        name: "FK_Answers_Questions_QuestionId",
                         column: x => x.QuestionId,
-                        principalTable: "Question",
+                        principalTable: "Questions",
                         principalColumn: "Id");
                 });
 
+            migrationBuilder.InsertData(
+                table: "AspNetRoles",
+                columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
+                values: new object[] { "3a916b4c-66ec-432d-924f-b3377aba9064", "3a916b4c-66ec-432d-924f-b3377aba9064", "SuperAdmin", "SUPERADMIN" });
+
+            migrationBuilder.InsertData(
+                table: "AspNetUsers",
+                columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "CourseId", "Email", "EmailConfirmed", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "RoleId", "SecurityStamp", "TwoFactorEnabled", "UserName" },
+                values: new object[] { "a11fa953-09da-4c57-88e6-9bfaf3c46a80", 0, "b9b892e1-adec-4e54-8644-5f0bce7627bb", 0, "frankofoedu@gmail.com", true, false, null, null, "FRANKOFOEDU@GMAIL.COM", "AQAAAAEAACcQAAAAEClKEp4cG+L4RsFrgqhGTu2JawNAG5+RKmobkiZGzQgQI6bE7Ywi1/RMFghA95EezQ==", null, false, new Guid("00000000-0000-0000-0000-000000000000"), "4509ffd5-75d3-473c-a87e-7c62a163a72c", false, "Frank" });
+
+            migrationBuilder.InsertData(
+                table: "AspNetUserRoles",
+                columns: new[] { "RoleId", "UserId" },
+                values: new object[] { "3a916b4c-66ec-432d-924f-b3377aba9064", "a11fa953-09da-4c57-88e6-9bfaf3c46a80" });
+
             migrationBuilder.CreateIndex(
-                name: "IX_Answer_QuestionId",
-                table: "Answer",
+                name: "IX_Answers_QuestionId",
+                table: "Answers",
                 column: "QuestionId");
 
             migrationBuilder.CreateIndex(
@@ -273,20 +290,20 @@ namespace ApplicationForTest.Data.Migrations.App
                 filter: "[NormalizedUserName] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Question_TestId",
-                table: "Question",
+                name: "IX_Questions_TestId",
+                table: "Questions",
                 column: "TestId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Test_CourseId",
-                table: "Test",
+                name: "IX_Tests_CourseId",
+                table: "Tests",
                 column: "CourseId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "Answer");
+                name: "Answers");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoleClaims");
@@ -304,7 +321,7 @@ namespace ApplicationForTest.Data.Migrations.App
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
-                name: "Question");
+                name: "Questions");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");
@@ -313,10 +330,10 @@ namespace ApplicationForTest.Data.Migrations.App
                 name: "AspNetUsers");
 
             migrationBuilder.DropTable(
-                name: "Test");
+                name: "Tests");
 
             migrationBuilder.DropTable(
-                name: "Course");
+                name: "Courses");
         }
     }
 }

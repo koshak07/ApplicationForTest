@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
 
-namespace ApplicationForTest.Data.Migrations.App
+namespace ApplicationForTest.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
     partial class ApplicationDbContextModelSnapshot : ModelSnapshot
@@ -44,7 +44,7 @@ namespace ApplicationForTest.Data.Migrations.App
 
                     b.HasIndex("QuestionId");
 
-                    b.ToTable("Answer");
+                    b.ToTable("Answers");
                 });
 
             modelBuilder.Entity("ApplicationForTest.Models.ApplicationUser", b =>
@@ -92,6 +92,9 @@ namespace ApplicationForTest.Data.Migrations.App
                     b.Property<bool>("PhoneNumberConfirmed")
                         .HasColumnType("bit");
 
+                    b.Property<Guid>("RoleId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<string>("SecurityStamp")
                         .HasColumnType("nvarchar(max)");
 
@@ -113,6 +116,25 @@ namespace ApplicationForTest.Data.Migrations.App
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
 
                     b.ToTable("AspNetUsers", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = "a11fa953-09da-4c57-88e6-9bfaf3c46a80",
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "b9b892e1-adec-4e54-8644-5f0bce7627bb",
+                            CourseId = 0,
+                            Email = "frankofoedu@gmail.com",
+                            EmailConfirmed = true,
+                            LockoutEnabled = false,
+                            NormalizedUserName = "FRANKOFOEDU@GMAIL.COM",
+                            PasswordHash = "AQAAAAEAACcQAAAAEClKEp4cG+L4RsFrgqhGTu2JawNAG5+RKmobkiZGzQgQI6bE7Ywi1/RMFghA95EezQ==",
+                            PhoneNumberConfirmed = false,
+                            RoleId = new Guid("00000000-0000-0000-0000-000000000000"),
+                            SecurityStamp = "4509ffd5-75d3-473c-a87e-7c62a163a72c",
+                            TwoFactorEnabled = false,
+                            UserName = "Frank"
+                        });
                 });
 
             modelBuilder.Entity("ApplicationForTest.Models.Course", b =>
@@ -131,7 +153,7 @@ namespace ApplicationForTest.Data.Migrations.App
 
                     b.HasKey("Id");
 
-                    b.ToTable("Course");
+                    b.ToTable("Courses");
                 });
 
             modelBuilder.Entity("ApplicationForTest.Models.Question", b =>
@@ -156,7 +178,7 @@ namespace ApplicationForTest.Data.Migrations.App
 
                     b.HasIndex("TestId");
 
-                    b.ToTable("Question");
+                    b.ToTable("Questions");
                 });
 
             modelBuilder.Entity("ApplicationForTest.Models.Test", b =>
@@ -181,7 +203,7 @@ namespace ApplicationForTest.Data.Migrations.App
 
                     b.HasIndex("CourseId");
 
-                    b.ToTable("Test");
+                    b.ToTable("Tests");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -209,6 +231,15 @@ namespace ApplicationForTest.Data.Migrations.App
                         .HasFilter("[NormalizedName] IS NOT NULL");
 
                     b.ToTable("AspNetRoles", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = "3a916b4c-66ec-432d-924f-b3377aba9064",
+                            ConcurrencyStamp = "3a916b4c-66ec-432d-924f-b3377aba9064",
+                            Name = "SuperAdmin",
+                            NormalizedName = "SUPERADMIN"
+                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -298,6 +329,13 @@ namespace ApplicationForTest.Data.Migrations.App
                     b.HasIndex("RoleId");
 
                     b.ToTable("AspNetUserRoles", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            UserId = "a11fa953-09da-4c57-88e6-9bfaf3c46a80",
+                            RoleId = "3a916b4c-66ec-432d-924f-b3377aba9064"
+                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>

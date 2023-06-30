@@ -1,10 +1,11 @@
 using ApplicationForTest.Data;
-using ApplicationForTest.Models;
 using ApplicationForTest.Servises;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using ApplicationForTest.Interfaces;
 using Microsoft.Extensions.DependencyInjection;
+using ApplicationForTest.Models;
+using ApplicationForTest.Entities;
 
 namespace ApplicationForTest
 {
@@ -17,18 +18,19 @@ namespace ApplicationForTest
             var userconnectionString = builder.Configuration.GetConnectionString("UserConnection");
 
             var connectionString = builder.Configuration.GetConnectionString("DefaultConnection") ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
-            
+
             builder.Services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(connectionString));
-            builder.Services.AddDbContext<UserDBContext>(options =>
-                options.UseSqlServer(userconnectionString));
+            //builder.Services.AddDbContext<UserDBContext>(options =>
+            //    options.UseSqlServer(userconnectionString));
             builder.Services.AddDatabaseDeveloperPageExceptionFilter();
             // Add services to the container.
             builder.Services.AddTransient<IAppService, AppService>();
             builder.Services.AddTransient<IApplicationDbContext, ApplicationDbContext>();
 
-
-            builder.Services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = true)
+            builder.Services.AddDefaultIdentity<ApplicationUser>(options =>
+            options.SignIn.RequireConfirmedAccount = true)
+                //.AddRoles<ApplicationRole>()
                 .AddEntityFrameworkStores<ApplicationDbContext>();
 
             builder.Services.AddControllersWithViews();
@@ -58,6 +60,19 @@ namespace ApplicationForTest
             app.MapControllerRoute(
                 name: "default",
                 pattern: "{controller=Home}/{action=Index}/{id?}");
+
+            //using (var scope = app.Services.CreateScope())
+            //{
+            //    var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<ApplicationRole>>();
+            //    var roles = new[] { "Admin", "Student" };
+
+            //    foreach (var role in roles)
+            //    {
+            //        if (!await roleManager.RoleExistsAsync(role))
+            //            await roleManager.CreateAsync(new ApplicationRole(role));
+            //    }
+            //}
+
             app.MapRazorPages();
 
             app.Run();

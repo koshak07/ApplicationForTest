@@ -43,12 +43,12 @@ namespace ApplicationForTest.Servises
 
         public async Task<List<Course>> GetCourses()
         {
-            return await _context.Course.Include(c => c.Tests).ToListAsync();
+            return await _context.Courses.Include(c => c.Tests).ToListAsync();
         }
 
         public async Task<Course> GetCourse(int? id)
         {
-            var course = await _context.Course
+            var course = await _context.Courses
               .FindAsync(id);
             if (course == null)
             {
@@ -60,13 +60,13 @@ namespace ApplicationForTest.Servises
 
         public async Task<List<Test>> GetTests(int? courseId)
         {
-            return await _context.Test.Where(p => p.CourseId == courseId)
+            return await _context.Tests.Where(p => p.CourseId == courseId)
                 .Include(c => c.Questions).ToListAsync();
         }
 
         public async Task<Test> GetTest(Guid? id)
         {
-            var test = await _context.Test
+            var test = await _context.Tests
                .FindAsync(id);
             if (test == null)
             {
@@ -78,12 +78,12 @@ namespace ApplicationForTest.Servises
 
         public async Task<List<Question>> GetQuestions(Guid testId)
         {
-            return await _context.Question.Where(p => p.TestId == testId).ToListAsync();
+            return await _context.Questions.Where(p => p.TestId == testId).ToListAsync();
         }
 
         public async Task<Question> GetQuestion(Guid? id)
         {
-            var question = await _context.Question
+            var question = await _context.Questions
                .FindAsync(id);
             if (question == null)
             {
@@ -95,12 +95,12 @@ namespace ApplicationForTest.Servises
 
         public async Task<List<Answer>> GetAnswers(Guid? questionId)
         {
-            return await _context.Answer.Where(p => p.QuestionId == questionId).ToListAsync();
+            return await _context.Answers.Where(p => p.QuestionId == questionId).ToListAsync();
         }
 
         public async Task<Answer> GetAnswer(Guid? id)
         {
-            var answer = await _context.Answer
+            var answer = await _context.Answers
                .FindAsync(id);
             if (answer == null)
             {
@@ -132,7 +132,7 @@ namespace ApplicationForTest.Servises
 
         private bool CourseExists(int id)
         {
-            return (_context.Course?.Any(e => e.Id == id)).GetValueOrDefault();
+            return (_context.Courses?.Any(e => e.Id == id)).GetValueOrDefault();
         }
 
         public async Task UpdateTest(Test test)
@@ -157,7 +157,7 @@ namespace ApplicationForTest.Servises
 
         private bool TestExists(Guid id)
         {
-            return (_context.Test?.Any(e => e.Id == id)).GetValueOrDefault();
+            return (_context.Tests?.Any(e => e.Id == id)).GetValueOrDefault();
         }
 
         public async Task UpdateQuestion(Question question)
@@ -182,7 +182,7 @@ namespace ApplicationForTest.Servises
 
         private bool QuestionExists(Guid id)
         {
-            return (_context.Question?.Any(e => e.Id == id)).GetValueOrDefault();
+            return (_context.Questions?.Any(e => e.Id == id)).GetValueOrDefault();
         }
 
         public async Task UpdateAnswer(Answer answer)
@@ -207,15 +207,15 @@ namespace ApplicationForTest.Servises
 
         private bool AnswerExists(Guid id)
         {
-            return (_context.Answer?.Any(e => e.Id == id)).GetValueOrDefault();
+            return (_context.Answers?.Any(e => e.Id == id)).GetValueOrDefault();
         }
 
         public async Task RemoveCourse(int? id)
         {
-            var course = await _context.Course.FindAsync(id);
+            var course = await _context.Courses.FindAsync(id);
             if (course != null)
             {
-                _context.Course.Remove(course);
+                _context.Courses.Remove(course);
             }
 
             await _context.SaveChangesAsync();
@@ -223,10 +223,10 @@ namespace ApplicationForTest.Servises
 
         public async Task RemoveTest(Guid? id)
         {
-            var test = await _context.Test.FindAsync(id);
+            var test = await _context.Tests.FindAsync(id);
             if (test != null)
             {
-                _context.Test.Remove(test);
+                _context.Tests.Remove(test);
             }
 
             await _context.SaveChangesAsync();
@@ -234,10 +234,10 @@ namespace ApplicationForTest.Servises
 
         public async Task RemoveQuestion(Guid? id)
         {
-            var question = await _context.Question.FindAsync(id);
+            var question = await _context.Questions.FindAsync(id);
             if (question != null)
             {
-                _context.Question.Remove(question);
+                _context.Questions.Remove(question);
             }
 
             await _context.SaveChangesAsync();
@@ -245,10 +245,10 @@ namespace ApplicationForTest.Servises
 
         public async Task RemoveAnswer(Guid? id)
         {
-            var answer = await _context.Answer.FindAsync(id);
+            var answer = await _context.Answers.FindAsync(id);
             if (answer != null)
             {
-                _context.Answer.Remove(answer);
+                _context.Answers.Remove(answer);
             }
 
             await _context.SaveChangesAsync();
