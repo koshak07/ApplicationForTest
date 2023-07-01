@@ -21,7 +21,9 @@ namespace ApplicationForTest.Data
         protected override void OnModelCreating(ModelBuilder builder)
         {
             string ADMIN_ID = "a11fa953-09da-4c57-88e6-9bfaf3c46a80";
+            string USER_ID = "17423714-fb1c-482c-8677-a914ace43b40";
             string ROLE_ID = "3a916b4c-66ec-432d-924f-b3377aba9064";
+            string USER_ROLE_ID = "17423714-fb1c-482c-8677-a914ace43b40";
 
             //seed admin role
             builder.Entity<IdentityRole>().HasData(new IdentityRole
@@ -30,24 +32,42 @@ namespace ApplicationForTest.Data
                 NormalizedName = "SUPERADMIN",
                 Id = ROLE_ID,
                 ConcurrencyStamp = ROLE_ID
+            },
+            new IdentityRole
+            {
+                Name = "User",
+                NormalizedName = "USER",
+                Id = USER_ROLE_ID,
+                ConcurrencyStamp = USER_ROLE_ID
             });
 
             //create user
-            var appUser = new ApplicationUser
+            var appAdmin = new ApplicationUser
             {
                 Id = ADMIN_ID,
-                Email = "frankofoedu@gmail.com",
+                Email = "admin@gmail.com",
                 EmailConfirmed = true,
-                UserName = "Frank",
-                NormalizedUserName = "FRANKOFOEDU@GMAIL.COM"
+                UserName = "Admin",
+                NormalizedUserName = "ADMIN@GMAIL.COM"
             };
-
+            var appUser = new ApplicationUser
+            {
+                Id = USER_ID,
+                Email = "user@gmail.com",
+                EmailConfirmed = true,
+                UserName = "User",
+                NormalizedUserName = "USER@GMAIL.COM"
+            };
 
             //set user password
             PasswordHasher<ApplicationUser> ph = new PasswordHasher<ApplicationUser>();
-            appUser.PasswordHash = ph.HashPassword(appUser, "mypassword_ ?");
+            {
+                appAdmin.PasswordHash = ph.HashPassword(appAdmin, "mypassword_ ?");
+                appUser.PasswordHash = ph.HashPassword(appUser, "mypassword1_ ?");
+            }
 
             //seed user
+            builder.Entity<ApplicationUser>().HasData(appAdmin);
             builder.Entity<ApplicationUser>().HasData(appUser);
 
             //set user role to admin
@@ -55,6 +75,11 @@ namespace ApplicationForTest.Data
             {
                 RoleId = ROLE_ID,
                 UserId = ADMIN_ID
+            });
+            builder.Entity<IdentityUserRole<string>>().HasData(new IdentityUserRole<string>
+            {
+                RoleId = USER_ROLE_ID,
+                UserId = USER_ID
             });
 
             base.OnModelCreating(builder);

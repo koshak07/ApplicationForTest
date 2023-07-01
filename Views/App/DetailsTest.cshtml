@@ -1,13 +1,9 @@
 ﻿@model ApplicationForTest.Models.Test
 
-
-
 @{
 
     ViewData["Title"] = "Details";
-    
 }
-
 
 <h1>Details</h1>
 
@@ -27,16 +23,31 @@
         <dd class="col-sm-10">
             @Html.DisplayFor(model => model.Description)
         </dd>
-        
+
     </dl>
-   
+    @if (User.IsInRole("User"))
+    {
+        <p></p>
+    }
+    else
+    {
         <p>
             <a asp-action="CreateQuestion" asp-route-id="@Model.Id">Create New Question</a>
         </p>
-    
+    }
 </div>
 <div>
-    <a asp-action="EditTest" asp-route-id="@Model.Id">Edit</a> |
+    @if (User.IsInRole("User"))
+    {
+        <p></p>
+    }
+    else
+    {
+        <p>
+
+            <a asp-action="EditTest" asp-route-id="@Model.Id">Edit</a> |
+        </p>
+    }
     <a asp-action="IndexTests" asp-route-id="@Model.CourseId">Back to List</a>
 </div>
 

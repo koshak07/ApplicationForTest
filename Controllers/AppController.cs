@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace ApplicationForTest.Controllers
 {
-    [Authorize]
+    [Authorize(Roles = "SuperAdmin,User")]
     public class AppController : Controller
     {
         private readonly IAppService appService;
@@ -67,6 +67,16 @@ namespace ApplicationForTest.Controllers
             ViewData["id"] = id;
             ViewData["count"] = result.Count;
 
+            List<Answer> answList = new List<Answer>();
+
+            foreach (var q in result)
+            {
+                var list = await appService.GetAnswers(q.Id);
+                answList.AddRange(list);
+            }
+
+            ViewBag.Answer = answList;
+
             return View(result);
         }
 
@@ -111,6 +121,8 @@ namespace ApplicationForTest.Controllers
         }
 
         // GET: Course/Create
+
+        [Authorize(Roles = "SuperAdmin")]
         public ActionResult Create()
         {
             return View();

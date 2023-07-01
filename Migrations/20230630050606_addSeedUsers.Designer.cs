@@ -4,6 +4,7 @@ using ApplicationForTest.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ApplicationForTest.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230630050606_addSeedUsers")]
+    partial class addSeedUsers
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -122,16 +124,15 @@ namespace ApplicationForTest.Migrations
                         {
                             Id = "a11fa953-09da-4c57-88e6-9bfaf3c46a80",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "32ca8716-e118-41a7-9f1a-fcb34265c8e9",
+                            ConcurrencyStamp = "cf66faed-063a-439e-ade6-a80838042c70",
                             CourseId = 0,
                             Email = "admin@gmail.com",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
                             NormalizedUserName = "ADMIN@GMAIL.COM",
-                            PasswordHash = "AQAAAAEAACcQAAAAEGn97OG/zfkg5GLBgjtyOgoOZG4i/Qxjp1sFBAQSYFmSzd22ILQXTDMwLYxAPcfwgw==",
                             PhoneNumberConfirmed = false,
                             RoleId = new Guid("00000000-0000-0000-0000-000000000000"),
-                            SecurityStamp = "7f25b25c-88e4-421a-a7b8-a77f064c85fa",
+                            SecurityStamp = "f61ef89a-48db-420d-baaa-74c0a43eeb0b",
                             TwoFactorEnabled = false,
                             UserName = "Admin"
                         },
@@ -139,16 +140,16 @@ namespace ApplicationForTest.Migrations
                         {
                             Id = "17423714-fb1c-482c-8677-a914ace43b40",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "8a7b83ed-1dff-4ea0-b155-af76b58ebdb1",
+                            ConcurrencyStamp = "a0212df9-e375-42db-8853-1b7c1cea49bc",
                             CourseId = 0,
                             Email = "user@gmail.com",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
                             NormalizedUserName = "USER@GMAIL.COM",
-                            PasswordHash = "AQAAAAEAACcQAAAAEATBc4GbtusjgFyTDTmt8RX22FJPKK8r+SO15Cr98kv2EpiVnCNZxA7AtaGbnlnyLg==",
+                            PasswordHash = "AQAAAAEAACcQAAAAELyr36e1S5+bkvyEklvk8UTyFfoIxFNG3IMwdBFE+M81RLENUPk65HbV3BrhkRz/kQ==",
                             PhoneNumberConfirmed = false,
                             RoleId = new Guid("00000000-0000-0000-0000-000000000000"),
-                            SecurityStamp = "1c55f6fd-0aff-4057-84ca-390a7202faee",
+                            SecurityStamp = "3f882f63-af10-4ad6-9be4-cc2974b041e1",
                             TwoFactorEnabled = false,
                             UserName = "User"
                         });

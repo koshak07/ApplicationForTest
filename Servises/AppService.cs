@@ -78,7 +78,7 @@ namespace ApplicationForTest.Servises
 
         public async Task<List<Question>> GetQuestions(Guid testId)
         {
-            return await _context.Questions.Where(p => p.TestId == testId).ToListAsync();
+            return await _context.Questions.Where(p => p.TestId == testId).Include(c=>c.Answers).ToListAsync();
         }
 
         public async Task<Question> GetQuestion(Guid? id)

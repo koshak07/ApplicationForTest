@@ -4,69 +4,61 @@
     ViewData["Title"] = "Question List";
     var testId = ViewData["id"];
     var count = ViewData["count"];
+    var answ = ViewBag.Answer;
 
 }
 
 <h1>Questions List</h1>
 
-<p>
-    <a asp-action="CreateQuestion" asp-route-id="@testId">Create New Question </a>
-</p>
-
-
-
-@if (Model.Count() > 0)
+@if (User.IsInRole("User"))
 {
-    <table class="table">
-        <thead>
-            <tr>
-                <th>
-                    @Html.DisplayNameFor(model => model.Name)
-
-                </th>
-
-                <th>
-                    @Html.DisplayNameFor(model => model.Description)
-                </th>
-            </tr>
-        </thead>
-        <tbody>
-
-
-
-            @foreach (var item in Model)
-            {
-                <tr>
-                    
-                    <td>
-                        <a asp-action="IndexAnswers"
-                           asp-route-id="@item.Id">
-                            @Html.DisplayFor(modelItem => item.Name)
-                        </a>
-                    </td>
-                    
-
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Description)
-                    </td>
-                    
-                    
-
-                    <td>
-                        <a asp-action="EditQuestion" asp-route-id="@item.Id">Edit</a> |
-                        <a asp-action="DetailsQuestion" asp-route-id="@item.Id">Detail</a> |
-
-                        <a asp-action="DeleteQuestion" asp-route-id="@item.Id">Delete</a>
-                    </td>
-                </tr>
-            }
-
-        </tbody>
-    </table>
-    <a asp-action="DetailsTest" asp-route-id="@testId">Back To Question</a>
+    <p></p>
+}
+else
+{
     <p>
         <a asp-action="CreateQuestion" asp-route-id="@testId">Create New Question </a>
     </p>
+}
+
+@if (Model.Count() > 0)
+{
+    <div>
+
+        @Html.DisplayNameFor(model => model.Name)
+
+        <div>
+            @foreach (var item in Model)
+            {
+                <div>
+                    <td>@item.Name</td>
+
+                </div>
+
+                <div>
+                    <td>@item.Description</td>
+                </div>
+                @foreach (var answer in item.Answers)
+                {
+                    
+                    
+                    
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="@answer.Name" id="@answer.Id">
+                            <label class="form-check-label" for="@answer.Id">
+                                @answer.Name
+                            </label>
+                            <input hidden class="form-check-input" type="radio" name="@answer.Name" id="@answer.QuestionId" checked>
+                        </div>
+                    
+                 
+                }
+
+            }
+
+        </div>
+    </div>
+    <a asp-action="DetailsTest" asp-route-id="@testId">Back To Question</a>
 }
 else
 {
