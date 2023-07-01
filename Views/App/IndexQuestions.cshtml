@@ -38,20 +38,17 @@ else
                 <div>
                     <td>@item.Description</td>
                 </div>
+                
                 @foreach (var answer in item.Answers)
                 {
                     
-                    
-                    
-                        <div class="form-check">
-                            <input class="form-check-input" type="radio" name="@answer.Name" id="@answer.Id">
-                            <label class="form-check-label" for="@answer.Id">
-                                @answer.Name
-                            </label>
-                            <input hidden class="form-check-input" type="radio" name="@answer.Name" id="@answer.QuestionId" checked>
+                    <form asp-action="SelectAnswer" method="post">
+                        <div type="submit" class="form-check" value="@answer.isRight">
+                        @Html.RadioButton("uniqueRadio", answer.Name)
+                        @Html.Label(answer.Name)
                         </div>
-                    
-                 
+                        
+                   </form>
                 }
 
             }
