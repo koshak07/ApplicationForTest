@@ -1,11 +1,9 @@
 using ApplicationForTest.Data;
+using ApplicationForTest.Interfaces;
+using ApplicationForTest.Models;
 using ApplicationForTest.Servises;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using ApplicationForTest.Interfaces;
-using Microsoft.Extensions.DependencyInjection;
-using ApplicationForTest.Models;
-using ApplicationForTest.Entities;
 
 namespace ApplicationForTest
 {
@@ -30,7 +28,7 @@ namespace ApplicationForTest
 
             builder.Services.AddDefaultIdentity<ApplicationUser>(options =>
             options.SignIn.RequireConfirmedAccount = true).AddRoles<IdentityRole>()
-                
+
                 .AddEntityFrameworkStores<ApplicationDbContext>();
 
             builder.Services.AddControllersWithViews();

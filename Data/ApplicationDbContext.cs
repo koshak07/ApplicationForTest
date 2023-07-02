@@ -1,5 +1,4 @@
-﻿using ApplicationForTest.Entities;
-using ApplicationForTest.Models;
+﻿using ApplicationForTest.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;

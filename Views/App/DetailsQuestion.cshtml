@@ -29,44 +29,43 @@
     @if (answ != null)
     {
         <table class="table">
-            <thead>
-                <tr>
-                    <th>
-                        <p>Variant</p>
-                    </th>
-                    <th>
-                        <p>isRight</p>
-                    </th>
-                </tr>
-            </thead>
-            <tbody>
-
+        <thead>
+        <tr>
+        <th>
+        <p>Variant</p>
+        </th>
+        <th>
+        <p>isRight</p>
+        </th>
+        </tr>
+        </thead>
+        <tbody>
+        <p>
+        <a asp-action="CreateAnswer" asp-route-id="@answ.QuestionId">Create New Answer </a>
+        </p>
                 @foreach (var item in answ)
                 {
-                    <tr>
-                        <td>
-                            <p>@item.Name</p>
-                        </td>
-
-                        <td>
-                            <p>@item.isRight</p>
-                        </td>
-
+                 <tr>
+                <td>
+                <p>@item.Name</p>
+                </td>                            
+                <td>
+                <p>@item.isRight</p>
+                </td>
                         @if (User.IsInRole("User"))
                         {
-                            <p></p>
+                        <p></p>
                         }
                         else
                         {
-                            <td>
-                                <a asp-action="EditAnswer" asp-route-id="@item.Id">Edit</a> |
-
-                                <a asp-action="DeleteAnswer" asp-route-id="@item.Id">Delete</a>
-                            </td>
+                        <td>
+                        <a asp-action="EditAnswer" asp-route-id="@item.Id">Edit</a> |
+                        <a asp-action="DeleteAnswer" asp-route-id="@item.Id">Delete</a>
+                        </td>
                         }
-                    </tr>
+                </tr>
                 }
-            </tbody>
+        </tbody>
         </table>
     }
     else
@@ -83,6 +82,6 @@
     {
         <div><a asp-action="EditTest" asp-route-id="@Model.Id">Edit</a> |</div>
     }
-    <a asp-action="IndexQuestions" asp-route-id="@Model.TestId">Back to List</a>
+<a asp-action="IndexQuestions" asp-route-id="@Model.TestId">Back to List</a>
 </div>
 
