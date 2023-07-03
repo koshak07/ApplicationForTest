@@ -1,5 +1,11 @@
 ﻿@model IEnumerable<ApplicationForTest.Models.Question>
 
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+<script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.3.js"
+        integrity="sha256-nQLuAZGRRcILA+6dMBOvcRh5Pe310sBpanc6+QBmyVM="
+        crossorigin="anonymous">
+</script>
 @{
     ViewData["Title"] = "Question List";
     var testId = ViewData["id"];
@@ -17,45 +23,134 @@
 else
 {
     <p>
-    <a asp-action="CreateQuestion" asp-route-id="@testId">Create New Question </a>
+        <a asp-action="CreateQuestion" asp-route-id="@testId">Create New Question </a>
     </p>
 }
 
-@if (Model.Count() > 0)
-{
-    <div>
 
-        @Html.DisplayNameFor(model => model.Name)
+    @if (Model.Count() > 0)
+    {
+        <div id="parent">
 
-     <div>
-            @foreach (var item in Model)
-            {
-                 <div>
-                                @*<p>  <a asp-action="CreateAnswer" asp-route-id="@item.Id">Create New Answer </a>  </p>*@
-
-                     <td>@item.Name</td>
-                </div>
-                <div>
-                <td>@item.Description</td>
-                </div>
-                @foreach (var answer in item.Answers)
+            @Html.DisplayNameFor(model => model.Name)
+            <div>
+                @for (var i = 1; i <= Model.Count(); i++)
                 {
-                        <form asp-action="SelectAnswer" method="post">
-                                     <div class="form-check">
-                                      <input class="form-check-input" type="radio" name="@answer.Name" id="@answer.QuestionId" >
-                                      <label class="form-check-label" for="@answer.Name">
-                                @answer.Name
-                                      </label>
-                                   <input hidden class="form-check-input" type="radio" name="@answer.Name" id="@answer.QuestionId" checked="checked">
-                                    </div>
+                    var index = 1;
+                    if (index == i)
+                    {
+                        <div class="rb" style="display:none">
+                        @foreach (var item in Model)
+                        { 
+                        <form>
+                                <div>
+                                    @*<p>  <a asp-action="CreateAnswer" asp-route-id="@item.Id">Create New Answer </a>  </p>*@
+                                    <td>@item.Name</td>
+                                </div>
+                                <div>
+                                    <td>@item.Description</td>
+                                </div>
+                                <div>
+                                    @foreach (var answer in item.Answers)
+                                    {
+                                        <div class="form-check" asp-action="GetResultQuestion" id="">
+                                            <input class="form-check-input" type="radio" name="@answer.QuestionId" id="@answer.QuestionId">
+                                            <label class="form-check-label" for="@answer.Name">
+                                                @answer.Name
+                                            </label>
+                                            <input hidden class="form-check-input" type="radio" name="@answer.Name" id="@answer.QuestionId" checked="checked">
+                                        </div>
+                                        <label id="correctans" name="@answer.isRight"
+                                               style="display:none;color:forestgreen" class="rb">
+                                            @answer.Name
+                                        </label>
+                                    }
+                                </div>
+                            
+                            @if(i==Model.Count())
+                            {
+
+                            <input type="submit" id="butexam" onclick="execute()" class="btn btn-success" value="Submit"/>
+                            }else{
+                            <button onclick="nextQuest(index)">Next </button> 
+
+                            }
                         </form>
+                        }
+                    </div>
+                    }
+                    else
+                    {
+                    <button onclick="show()">show </button>
+
+
                 }
-            }
-        </div>
+                    
+
+                }
+
+            </div>
         </div>
         <a asp-action="DetailsTest" asp-route-id="@testId">Back To Question</a>
-}
-else
-{
+    }
+    else
+    {
         <h3>Нет данных для отображения</h3>
-}
+    }
+
+
+<br />
+<br />
+<label id="result"></label>
+
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
+<script>
+    function nextQuest(index) {
+        index++;
+    }
+    function show() {
+        document.getElementByClassName('rb').setAttribut('style', 'display:block');
+
+    }
+    function execute() {
+        var element = document.getElementById('parent');
+        var children = element.children;
+        for (var i = 0; i < children.length; i++) {
+            var child = children[i];
+            
+
+            //child.setAttribute('style', 'display: block');
+            $(child).ready(function () {
+                $("#butexam").click(function () {
+                    $(".rb").show();
+                    $(".rb").attr("disabled", true);
+                });
+            });
+
+        }
+        var marks = 0;
+        function validateAns(correctans) {
+
+            //alert(correctans);
+            var selectedAnswer = $("input[type='radio']:checked").val();
+            if (selectedAnswer === correctans) {
+                console.log(selectedAnswer);
+                marks += 1;
+            }
+        }
+        function Displayresult() {
+            document.getElementById("result").innerHTML = marks;
+
+        }
+    }
+            //$(document).ready(function () {
+            //    $("#butexam").click(function () {
+            //        $(".rb").show();
+            //        $(".rb").attr("disabled", true);
+            //    });
+            //});
+
+
+</script>
