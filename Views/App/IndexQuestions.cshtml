@@ -1,4 +1,4 @@
-﻿@model IEnumerable<ApplicationForTest.Models.Question>
+﻿@model List<ApplicationForTest.Models.Question>
 
 <script src="~/lib/jquery/dist/jquery.min.js"></script>
 <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js"></script>
@@ -27,69 +27,59 @@ else
     </p>
 }
 
+<form>
 
     @if (Model.Count() > 0)
     {
+       var index = 1;
         <div id="parent">
-
-            @Html.DisplayNameFor(model => model.Name)
-            <div>
-                @for (var i = 1; i <= Model.Count(); i++)
+            
+                @for (var i = 0; i < Model.Count(); i++)
                 {
-                    var index = 1;
-                    if (index == i)
+                    @if (Model.Count() > 0)
                     {
-                        <div class="rb" style="display:none">
-                        @foreach (var item in Model)
-                        { 
-                        <form>
-                                <div>
-                                    @*<p>  <a asp-action="CreateAnswer" asp-route-id="@item.Id">Create New Answer </a>  </p>*@
-                                    <td>@item.Name</td>
-                                </div>
-                                <div>
-                                    <td>@item.Description</td>
-                                </div>
-                                <div>
-                                    @foreach (var answer in item.Answers)
-                                    {
-                                        <div class="form-check" asp-action="GetResultQuestion" id="">
-                                            <input class="form-check-input" type="radio" name="@answer.QuestionId" id="@answer.QuestionId">
-                                            <label class="form-check-label" for="@answer.Name">
-                                                @answer.Name
-                                            </label>
-                                            <input hidden class="form-check-input" type="radio" name="@answer.Name" id="@answer.QuestionId" checked="checked">
-                                        </div>
-                                        <label id="correctans" name="@answer.isRight"
-                                               style="display:none;color:forestgreen" class="rb">
+                        <div style="@(index==1 ? "display:block" : "display:none")">
+                            <div>
+                                @*<p>  <a asp-action="CreateAnswer" asp-route-id="@item.Id">Create New Answer </a>  </p>*@
+                                <td>@Model[i].Name</td>
+                            </div>
+                            <div>
+                                <td>@Model[i].Description</td>
+                            </div>
+                            @*<div>
+                                @foreach (var answer in Model[i].Answers)
+                                {
+                                    <div class="form-check" asp-action="GetResultQuestion" id="">
+                                        <input class="form-check-input" type="radio" name="@answer.QuestionId" id="@answer.QuestionId">
+                                        <label class="form-check-label" for="@answer.Name">
                                             @answer.Name
                                         </label>
-                                    }
-                                </div>
-                            
-                            @if(i==Model.Count())
-                            {
-
-                            <input type="submit" id="butexam" onclick="execute()" class="btn btn-success" value="Submit"/>
-                            }else{
-                            <button onclick="nextQuest(index)">Next </button> 
-
-                            }
-                        </form>
-                        }
-                    </div>
+                                        <input hidden class="form-check-input" type="radio" name="@answer.Name" id="@answer.QuestionId" checked="checked">
+                                    </div>
+                                    <label id="correctans" name="@answer.isRight"
+                                           style="display:none;color:forestgreen" class="rb">
+                                        @answer.Name
+                                    </label>
+                                }
+                            </div>*@
+                           
+                        </div>
+                    
+                    }
+                    index++;
+                }
+                   @* @if (index == Model.Count() - 1)
+                    {
+                        <input type="submit" onclick="execute()" class="btn btn-success" value="Submit" />
                     }
                     else
                     {
-                    <button onclick="show()">show </button>
 
+                    <button id="butexam">Next </button>
+                    }*@
 
-                }
-                    
-
-                }
-
-            </div>
+              
+            
         </div>
         <a asp-action="DetailsTest" asp-route-id="@testId">Back To Question</a>
     }
@@ -98,6 +88,8 @@ else
         <h3>Нет данных для отображения</h3>
     }
 
+<a class="btn btn-primary" id="butexam">Next </a>
+</form>
 
 <br />
 <br />
@@ -107,50 +99,35 @@ else
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 
 <script>
-    function nextQuest(index) {
-        index++;
-    }
-    function show() {
-        document.getElementByClassName('rb').setAttribut('style', 'display:block');
+      
+    $(document).ready(function () {
+        var index = 1;
+        console.log(index);
+        $("#butexam").click(function () {
+            var element = document.getElementById("parent");
+            console.log(element);
+            //var children = element.children;
+            //for (var i = 0; i < children.length; i++) {
+            //    var child = children[i];
+            //    console.log(child);
+            //}
+        });
 
-    }
-    function execute() {
-        var element = document.getElementById('parent');
-        var children = element.children;
-        for (var i = 0; i < children.length; i++) {
-            var child = children[i];
-            
+    });
+        //var marks = 0;
+        //function validateAns(correctans) {
 
-            //child.setAttribute('style', 'display: block');
-            $(child).ready(function () {
-                $("#butexam").click(function () {
-                    $(".rb").show();
-                    $(".rb").attr("disabled", true);
-                });
-            });
+        //    //alert(correctans);
+        //    var selectedAnswer = $("input[type='radio']:checked").val();
+        //    if (selectedAnswer === correctans) {
+        //        console.log(selectedAnswer);
+        //        marks += 1;
+        //    }
+        //}
+        //function Displayresult() {
+        //    document.getElementById("result").innerHTML = marks;
 
-        }
-        var marks = 0;
-        function validateAns(correctans) {
-
-            //alert(correctans);
-            var selectedAnswer = $("input[type='radio']:checked").val();
-            if (selectedAnswer === correctans) {
-                console.log(selectedAnswer);
-                marks += 1;
-            }
-        }
-        function Displayresult() {
-            document.getElementById("result").innerHTML = marks;
-
-        }
-    }
-            //$(document).ready(function () {
-            //    $("#butexam").click(function () {
-            //        $(".rb").show();
-            //        $(".rb").attr("disabled", true);
-            //    });
-            //});
-
-
+        //}
+    
+         
 </script>
