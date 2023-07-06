@@ -15,6 +15,16 @@ namespace ApplicationForTest.Controllers
             this.appService = appService;
         }
 
+        //check result
+
+        public async Task<IActionResult> Result(int countCorrectAnsw)
+        {
+            var result = countCorrectAnsw;
+            ViewBag.Res = countCorrectAnsw;
+
+            return View(result);
+        }
+
         // GET: Courses List
         public async Task<IActionResult> Index()
         {

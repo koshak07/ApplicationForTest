@@ -20,7 +20,6 @@ namespace ApplicationForTest.Servises
             _context.Add(course);
             await _context.SaveChangesAsync();
         }
-
         public async Task CreateTest(Test test)
         {
             _context.Add(test);
@@ -54,7 +53,6 @@ namespace ApplicationForTest.Servises
             {
                 return null;
             }
-
             return course;
         }
 
@@ -72,7 +70,6 @@ namespace ApplicationForTest.Servises
             {
                 return null;
             }
-
             return test;
         }
 
@@ -129,12 +126,10 @@ namespace ApplicationForTest.Servises
                 }
             }
         }
-
         private bool CourseExists(int id)
         {
             return (_context.Courses?.Any(e => e.Id == id)).GetValueOrDefault();
         }
-
         public async Task UpdateTest(Test test)
         {
             try
@@ -154,12 +149,10 @@ namespace ApplicationForTest.Servises
                 }
             }
         }
-
         private bool TestExists(Guid id)
         {
             return (_context.Tests?.Any(e => e.Id == id)).GetValueOrDefault();
         }
-
         public async Task UpdateQuestion(Question question)
         {
             try
@@ -179,12 +172,10 @@ namespace ApplicationForTest.Servises
                 }
             }
         }
-
         private bool QuestionExists(Guid id)
         {
             return (_context.Questions?.Any(e => e.Id == id)).GetValueOrDefault();
         }
-
         public async Task UpdateAnswer(Answer answer)
         {
             try
@@ -204,12 +195,10 @@ namespace ApplicationForTest.Servises
                 }
             }
         }
-
         private bool AnswerExists(Guid id)
         {
             return (_context.Answers?.Any(e => e.Id == id)).GetValueOrDefault();
         }
-
         public async Task RemoveCourse(int? id)
         {
             var course = await _context.Courses.FindAsync(id);
@@ -217,10 +206,8 @@ namespace ApplicationForTest.Servises
             {
                 _context.Courses.Remove(course);
             }
-
             await _context.SaveChangesAsync();
         }
-
         public async Task RemoveTest(Guid? id)
         {
             var test = await _context.Tests.FindAsync(id);
@@ -228,10 +215,8 @@ namespace ApplicationForTest.Servises
             {
                 _context.Tests.Remove(test);
             }
-
             await _context.SaveChangesAsync();
         }
-
         public async Task RemoveQuestion(Guid? id)
         {
             var question = await _context.Questions.FindAsync(id);
@@ -239,10 +224,8 @@ namespace ApplicationForTest.Servises
             {
                 _context.Questions.Remove(question);
             }
-
             await _context.SaveChangesAsync();
         }
-
         public async Task RemoveAnswer(Guid? id)
         {
             var answer = await _context.Answers.FindAsync(id);
@@ -250,7 +233,6 @@ namespace ApplicationForTest.Servises
             {
                 _context.Answers.Remove(answer);
             }
-
             await _context.SaveChangesAsync();
         }
     }
